@@ -670,9 +670,9 @@ module WillFilter
             cond << (c.collect{|v| "\"#{v.strip}\""}.join(", "))
             cond << "]"
           elsif c.is_a?(Date)  
-            cond << "\"#{c.strftime("%Y-%m-%d")}\""
+            cond << "\"#{c.strftime(WillFilter::Config.date_format_str)}\""
           elsif c.is_a?(Time)  
-            cond << "\"#{c.strftime("%Y-%m-%d %H:%M:%S")}\""
+            cond << "\"#{c.strftime(WillFilter::Config.time_format_str)}\""
           elsif c.is_a?(Integer)  
             cond << c.to_s
           else  

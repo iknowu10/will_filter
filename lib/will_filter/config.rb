@@ -63,6 +63,10 @@ module WillFilter
     def self.export_options
       config[:export_options]
     end
+
+    def self.format_strings
+      config[:format_strings]
+    end
   
     def self.containers
       config[:containers]
@@ -106,6 +110,14 @@ module WillFilter
   
     def self.default_export_formats
       export_options[:default_formats]
+    end
+
+    def self.date_format_str
+      format_strings[:date]
+    end
+
+    def self.time_format_str
+      format_strings[:time]
     end
   end
 end

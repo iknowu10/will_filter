@@ -7,7 +7,7 @@
             <%= paginate(results) %>
         </td>
         <td style='text-align:right'>
-						Showing <%= results.offset_value + 1 %> - <%= results.offset_value + results.length %> of <%= results.total_count %>
+          <%= I18n.t("operational_reports.labels.showing") %> <%= results.offset_value + 1 %> - <%= results.offset_value + results.length %> <%= I18n.t("operational_reports.labels.of") %> <%= results.total_count %>
         </td>
     </tr>
 </table>
@@ -157,7 +157,7 @@
           %>
           <td style='<%=value_style%>' class='<%=value_class%>'>
               <% if cmeta[:filterable] %>
-                <div style='float:right;'><%=link_to(image_tag("will_filter/filter.png", :style=>"width:12px;"), results.add_filter_condition(cmeta[:key], :is, filter_value.to_s).to_params, {:title => "Show only #{filter_value}"}) %></div>
+                <div style='float:right;'><%=link_to(image_tag("will_filter/filter.png", :style=>"width:12px;"), results.add_filter_condition(cmeta[:key], :is, filter_value.to_s).to_params, {:title => "#{I18n.t("operational_reports.labels.show_only")} #{filter_value}"}) %></div>
               <% end -%>  
 
                <% if cmeta[:key] == :checkbox %>
@@ -169,10 +169,10 @@
                   <% end -%>
                   
                 <% elsif value.is_a?(Time) %> 
-                  <%= value.strftime("%m/%d/%Y %l:%M:%S") %>
+                  <%= value.strftime(WillFilter::Config.time_format_str) %>
 
                 <% elsif value.is_a?(Date) %>  
-                  <%= value.strftime("%m/%d/%Y") %>
+                  <%= value.strftime(WillFilter::Config.date_format_str) %>
                   
                <% else %>
 
@@ -213,7 +213,7 @@
 <table class='wf_paginator' style="margin-top:10px; margin-bottom:10px;">
     <tr>
         <td style='text-align:left'>
-            No results found
+          <%= I18n.t("operational_reports.labels.no_results_found") %>
         </td>
         <td style='text-align:right'>
         </td>

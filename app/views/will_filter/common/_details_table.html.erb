@@ -35,10 +35,10 @@
         <%= value.to_json %>
                             
       <% elsif value.is_a?(Time) %>   
-        <%= value.strftime("%m/%d/%Y %l:%M:%S") %>
+        <%= value.strftime(WillFilter::Config.time_format_str) %>
 
       <% elsif value.is_a?(Date) %>  
-        <%= value.strftime("%m/%d/%Y") %>
+        <%= value.strftime(WillFilter::Config.date_format_str) %>
                             
       <% else %>
         <%= value.to_s %> 
