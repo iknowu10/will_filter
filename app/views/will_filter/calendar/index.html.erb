@@ -9,7 +9,7 @@
     <%=link_to_function(image_tag("will_filter/close.gif", :title=>"Close"), "wfCalendar.hide()")%>
   </div>
 	
-  Calendar
+  <%= I18n.t("operational_reports.labels.calendar") %>
 </div>  
 <div class="wf_calendar_container">
 <%= form_tag({:controller => "/will_filter/calendar"}, {:method => :get, :id => "wf_calendar_form"}) do %>
