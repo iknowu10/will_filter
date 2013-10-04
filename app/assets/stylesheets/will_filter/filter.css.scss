@@ -10,7 +10,7 @@
   margin:0px;
   margin-bottom:10px;
   font-size: 12px;
-  font-family: Arial;
+  font-family: MuseoSans-300;
   width: 100%;
   border:solid 1px #e8e8e8;
   border-color:#e8e8e8 #bababa #bababa #e8e8e8;
@@ -113,7 +113,7 @@
         margin:2px;
         font-size: 10px;
         background-color: #ffeded;
-        font-family: Arial;
+        font-family: MuseoSans-300;
         border: 1px #f58a8a solid;
         color:#b60e0e;
         @include rounded-corners(10px);
@@ -136,7 +136,7 @@
   input {
     border: 1px solid #ccc;
     font-size: 12px;
-    font-family: Arial;
+    font-family: MuseoSans-300;
     margin:0px;
     padding: 2px !important;
     @include rounded-corners(10px);
@@ -145,7 +145,7 @@
   select {
     border: 1px solid #ccc;
     font-size: 12px;
-    font-family: Arial;
+    font-family: MuseoSans-300;
     margin:0px;
     padding: 1px !important;
     background-color:#EDEDED;

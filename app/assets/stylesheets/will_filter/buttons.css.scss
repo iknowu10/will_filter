@@ -5,7 +5,7 @@
   Licensed under GPL and MIT.
 */
 .wf_pcb, .wf_pcb span                         {background: url('/assets/will_filter/buttons.png') no-repeat; height: 23px; line-height: 23px; padding: 3px 0 7px 0; }
-.wf_pcb, a.wf_pcb:link, a.wf_pcb:visited      {color: #333; font-size: 12px; font-style:bold; font-family:arial; padding-left: 14px; text-decoration: none !important; }
+.wf_pcb, a.wf_pcb:link, a.wf_pcb:visited      {color: #333; font-size: 12px; font-style:bold; font-family:MuseoSans-300; padding-left: 14px; text-decoration: none !important; }
 
 /* ie 6 hack */
 * html div#frame .wf_pcb                      {color: #333; padding-top: 0px; padding-bottom: 0px; text-decoration: none; }

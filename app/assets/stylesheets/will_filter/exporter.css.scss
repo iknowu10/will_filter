@@ -41,14 +41,14 @@
   input {
     border: 1px solid #ccc;
     font-size: 12px;
-    font-family: Arial;
+    font-family: MuseoSans-300;
     @include rounded-corners(10px);
   }
 
   select  {
     border: 1px solid #ccc;
     font-size: 12px;
-    font-family: Arial;
+    font-family: MuseoSans-300;
     background-color:#EDEDED;
     @include rounded-corners(10px);
   }
