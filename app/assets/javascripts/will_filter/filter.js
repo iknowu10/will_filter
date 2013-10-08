@@ -117,21 +117,21 @@ Wf.Filter.prototype = {
 	  this.markDirty();
 	},
 	saveFilter: function() {
-    var filter_name = prompt("Please provide a name for the new filter:", "");
+    var filter_name = prompt(I18n.t('operational_reports.labels.provide_filter_name') + ':', "");
     if (filter_name == null) return;
     Wf.element("wf_name").value = filter_name;   
     this.showSpinner();
     this.updateFilterConditions('save_filter', Wf.Utils.serializeForm('wf_form'));
 	},
   updateFilter: function() {
-    var filter_name = prompt("Please provide a name for this filter:", Wf.value("wf_name"));
+    var filter_name = prompt(I18n.t('operational_reports.labels.provide_filter_name') + ':', Wf.value("wf_name"));
     if (filter_name == null) return;
     Wf.element("wf_name").value = filter_name;   
 		this.showSpinner();
     this.updateFilterConditions('update_filter', Wf.Utils.serializeForm('wf_form'));
   },
   deleteFilter: function() {
-		if (!confirm("Are you sure you want to delete this filter?")) return;
+		if (!confirm(I18n.t('operational_reports.labels.confirm_filter_deletion'))) return;
     this.showSpinner();
     this.updateFilterConditions('delete_filter', Wf.Utils.serializeForm('wf_form'));
   },

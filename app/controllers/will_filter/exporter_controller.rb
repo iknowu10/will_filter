@@ -90,6 +90,7 @@ module WillFilter
     end  
     
     def send_csv_data(wf_filter)
+      report_filters
       csv_string = CSV.generate(:col_sep => "\t", :row_sep => "\r\n", :headers => true, :force_quotes => true) do |csv|
         csv << execution_time
         csv << wf_filter.fields
@@ -107,11 +108,12 @@ module WillFilter
     end
 
     def report_filters
-
+      puts '###### report_filters #######'
+      puts @wf_filter.inspect
     end
 
     def execution_time
-      ['Execution Time:', Time.now.strftime("%Y-%m-%d %l:%M:%S")]
+      [I18n.t('operational_reports.labels.report_time'), Time.now.strftime("%Y-%m-%d %l:%M:%S")]
     end
   end
 end
