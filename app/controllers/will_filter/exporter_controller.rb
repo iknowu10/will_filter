@@ -92,7 +92,6 @@ module WillFilter
     def send_csv_data(wf_filter)
       csv_string = CSV.generate(:col_sep => "\t", :row_sep => "\r\n", :headers => true, :force_quotes => true) do |csv|
         csv << execution_time
-        csv << report_info
         csv << wf_filter.fields
         wf_filter.results.each do |obj|
           row = []
