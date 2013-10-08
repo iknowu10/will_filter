@@ -90,7 +90,9 @@ module WillFilter
     end  
     
     def send_csv_data(wf_filter)
-      csv_string = CSV.generate(:col_sep => "\t", :row_sep => "\r\n") do |csv|
+      csv_string = CSV.generate(:col_sep => "\t", :row_sep => "\r\n", :headers => true, :force_quotes => true) do |csv|
+        csv << execution_time
+        csv << report_info
         csv << wf_filter.fields
         wf_filter.results.each do |obj|
           row = []
@@ -103,6 +105,14 @@ module WillFilter
 
       send_data WINDOWS_UTF16LE_BOM + Iconv.conv("utf-16le", "utf-8", csv_string), :type => 'text/csv; charset=utf-8; header=present', :charset => 'utf-8',
                             :disposition => "attachment; filename=results.csv"      
+    end
+
+    def report_filters
+
+    end
+
+    def execution_time
+      ['Execution Time:', Time.now.strftime("%Y-%m-%d %l:%M:%S")]
     end
   end
 end

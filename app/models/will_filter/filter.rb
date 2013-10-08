@@ -716,12 +716,12 @@ module WillFilter
         if include_default
           filters = default_filters
           if (filters.size > 0)
-            filters.insert(0, ["-- Select Default Filter --", "-1"])
+            filters.insert(0, ["-- #{I18n.t('operational_reports.labels.select_default_filter')} --", "-1"])
           end
         end
   
         if user_filters.any?
-          filters << ["-- Select Saved Filter --", "-2"] if include_default
+          filters << ["-- #{I18n.t('operational_reports.labels.select_saved_filter')} --", "-2"] if include_default
           user_filters.each do |filter|
             filters << [filter.name, filter.id.to_s]
           end
