@@ -93,6 +93,7 @@ module WillFilter
       report_filters
       csv_string = CSV.generate(:col_sep => "\t", :row_sep => "\r\n", :headers => true, :force_quotes => true) do |csv|
         csv << execution_time
+        csv << report_name(wf_filter)
         csv << wf_filter.fields
         wf_filter.results.each do |obj|
           row = []
@@ -107,9 +108,8 @@ module WillFilter
                             :disposition => "attachment; filename=results.csv"      
     end
 
-    def report_filters
-      puts '###### report_filters #######'
-      puts @wf_filter.inspect
+    def report_name(wf_filter)
+      [I18n.t('operational_reports.labels.report_name'), wf_filter.name.present? ? wf_filter.name : I18n.t('operational_reports.labels.custom_report')]
     end
 
     def execution_time
