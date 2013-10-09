@@ -42,7 +42,7 @@ module WillFilter
           filter_class = WillFilter::Filter
         end
 
-        filter_class.new(self).deserialize_from_params(params).results
+        filter_class.new(self, :session_store => opts[:session_store]).deserialize_from_params(params).results
       end
     end
   end
