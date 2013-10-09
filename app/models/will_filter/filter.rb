@@ -44,6 +44,7 @@ module WillFilter
   class Filter < ActiveRecord::Base
     self.table_name = :will_filter_filters 
     attr_accessible :type, :name, :data, :user_id, :model_class_name
+    attr_accessor :session_store
 
     # set_table_name  :will_filter_filters
     serialize       :data
@@ -112,7 +113,7 @@ module WillFilter
     
     def extra_params
       @extra_params ||= {}
-    end    
+    end
 
     #############################################################################
     # a list of indexed fields where at least one of them has to be in a query
