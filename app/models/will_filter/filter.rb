@@ -155,6 +155,10 @@ module WillFilter
     def inner_joins
       []
     end
+
+    def left_joins
+      []
+    end
     
     def model_columns
       model_class.columns
@@ -176,6 +180,12 @@ module WillFilter
         end
         inner_joins.each do |inner_join|
           join_class = association_class(inner_join)
+          join_class.columns.each do |col|
+            defs[:"#{join_class.to_s.underscore}.#{col.name.to_sym}"] = default_condition_definition_for(col.name, col.sql_type)
+          end
+        end
+        left_joins.each do |left_join|
+          join_class = association_class(left_join[:association])
           join_class.columns.each do |col|
             defs[:"#{join_class.to_s.underscore}.#{col.name.to_sym}"] = default_condition_definition_for(col.name, col.sql_type)
           end
@@ -884,6 +894,9 @@ module WillFilter
         recs = model_class.where(sql_conditions).order(order_clause)
         inner_joins.each do |inner_join|
           recs = recs.joins(association_name(inner_join))
+        end
+        left_joins.each do |left_join|
+          recs = recs.joins("LEFT OUTER JOIN #{left_join[:association]} ON #{left_join[:join_clause]}")
         end
 
         if custom_conditions?
