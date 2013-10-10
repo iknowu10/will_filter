@@ -16,13 +16,12 @@
       </tr>        
     </thead>
     <tbody>
-      <% @wf_filter.model_class.columns.each_with_index do |col, index| %>
+      <% @wf_filter.model_column_keys.each_with_index do |col, index| %>
       <tr>
           <td>
-              <input type="checkbox" id="wf_fld_chk_<%=index%>" onClick="wfExporter.selectField(this);" style="width:20px;"><input type="hidden" id="wf_fld_name_<%=index%>" value="<%=col.name%>">
+              <input type="checkbox" id="wf_fld_chk_<%=index%>" onClick="wfExporter.selectField(this);" style="width:20px;"><input type="hidden" id="wf_fld_name_<%=index%>" value="<%=col%>">
           </td>
-          <td><%=col.name %></td>
-          <td><%=col.type %></td>
+          <td><%= col %></td>
       </tr>
       <% end %>
     </tbody>
