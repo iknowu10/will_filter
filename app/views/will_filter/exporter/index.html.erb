@@ -12,8 +12,7 @@
       <tr>
         <td><input type="checkbox" id="wf_fld_all" onClick="wfExporter.selectAllFields(this);" style="width:20px;"></td>
         <td><%= I18n.t("operational_reports.labels.name") %></td>
-        <td><%= I18n.t("operational_reports.labels.type") %></td>
-      </tr>        
+      </tr>
     </thead>
     <tbody>
       <% @wf_filter.model_column_keys.each_with_index do |col, index| %>

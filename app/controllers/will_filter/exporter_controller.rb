@@ -39,6 +39,7 @@ module WillFilter
       params[:wf_per_page] = 10000 # max export limit
   
       @wf_filter = WillFilter::Filter.deserialize_from_params(params)
+      @wf_filter.session_store = JSON.parse(session[:wf_filter_session_store], {:symbolize_names => true})
       
       if @wf_filter.custom_format?
         send_data(@wf_filter.process_custom_format, :type => 'text', :charset => 'utf-8')
@@ -90,7 +91,6 @@ module WillFilter
     end  
     
     def send_csv_data(wf_filter)
-      report_filters
       csv_string = CSV.generate(:col_sep => "\t", :row_sep => "\r\n", :headers => true, :force_quotes => true) do |csv|
         csv << execution_time
         csv << report_name(wf_filter)
