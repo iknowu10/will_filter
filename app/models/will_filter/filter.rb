@@ -44,7 +44,7 @@ module WillFilter
   class Filter < ActiveRecord::Base
     self.table_name = :will_filter_filters
     attr_accessible :type, :name, :data, :user_id, :model_class_name
-    attr_accessor :session_store
+    attr_accessor :session_store, :current_organisation_id
 
     # set_table_name  :will_filter_filters
     serialize :data
@@ -893,7 +893,7 @@ module WillFilter
     def results
       @results ||= begin
         handle_empty_filter!
-        recs = model_class.where(sql_conditions).order(order_clause)
+        recs = model_class.scoped.scoped(report_scope).where(sql_conditions).order(order_clause)
         inner_joins.each do |inner_join|
           recs = recs.joins(association_name(inner_join))
         end
@@ -906,8 +906,20 @@ module WillFilter
 
         recs = recs.page(page).per(per_page)
         recs.wf_filter = self
-        recs
+        report_decorator.decorate_collection(recs, :context => report_context)
       end
+    end
+
+    def report_scope
+      {}
+    end
+
+    def report_decorator
+      "#{model_class_name}Decorator".safe_constantize
+    end
+
+    def report_context
+      {}
     end
 
     # sums up the column for the given conditions

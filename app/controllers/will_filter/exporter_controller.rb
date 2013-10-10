@@ -32,9 +32,7 @@ module WillFilter
     def index
       @wf_filter = WillFilter::Filter.deserialize_from_params(params)
       @wf_filter.session_store = JSON.parse(session[:wf_filter_session_store], {:symbolize_names => true})
-      puts "%%%%%%%%%"
-      puts JSON.parse(session[:wf_filter_session_store], {:symbolize_names => true})
-      puts "%%%%%%%%%"
+      @wf_filter.current_organisation_id = session[:current_organisation_id]
       render :layout => false
     end
   
@@ -43,10 +41,8 @@ module WillFilter
       params[:wf_per_page] = 60000 # max export limit
   
       @wf_filter = WillFilter::Filter.deserialize_from_params(params)
-      puts "%%%%%%%%%"
-      puts JSON.parse(session[:wf_filter_session_store], {:symbolize_names => true})
-      puts "%%%%%%%%%"
       @wf_filter.session_store = JSON.parse(session[:wf_filter_session_store], {:symbolize_names => true})
+      @wf_filter.current_organisation_id = session[:current_organisation_id]
       
       if @wf_filter.custom_format?
         send_data(@wf_filter.process_custom_format, :type => 'text', :charset => 'utf-8')
