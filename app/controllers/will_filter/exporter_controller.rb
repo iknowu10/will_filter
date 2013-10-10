@@ -31,6 +31,10 @@ module WillFilter
 
     def index
       @wf_filter = WillFilter::Filter.deserialize_from_params(params)
+      @wf_filter.session_store = JSON.parse(session[:wf_filter_session_store], {:symbolize_names => true})
+      puts "%%%%%%%%%"
+      puts JSON.parse(session[:wf_filter_session_store], {:symbolize_names => true})
+      puts "%%%%%%%%%"
       render :layout => false
     end
   
