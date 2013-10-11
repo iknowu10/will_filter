@@ -101,7 +101,7 @@ module WillFilter
         wf_filter.results.each do |obj|
           row = []
           wf_filter.fields.each do |field|
-            row << obj.send(field).to_s 
+            row << "\"#{obj.send(field).to_s}\""
           end    
           csv << row
         end
@@ -112,7 +112,15 @@ module WillFilter
     end
 
     def report_name(wf_filter)
-      [I18n.t('operational_reports.labels.report_name'), wf_filter.name.present? ? wf_filter.name : I18n.t('operational_reports.labels.custom_report')]
+      [I18n.t('operational_reports.labels.report_name'), report_filter_name(wf_filter)]
+    end
+
+    def report_filter_name(wf_filter)
+      wf_filter.name.present? ? wf_filter.name : report_default_filter_name(wf_filter)
+    end
+
+    def report_default_filter_name(wf_filter)
+      params[:wf_key] != '-1' ? I18n.t("operational_reports.default_filters.#{params[:wf_model].demodulize.downcase}.#{params[:wf_key]}") : I18n.t('operational_reports.labels.custom_report')
     end
 
     def execution_time
