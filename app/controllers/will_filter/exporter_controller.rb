@@ -101,7 +101,7 @@ module WillFilter
         wf_filter.results.each do |obj|
           row = []
           wf_filter.fields.each do |field|
-            row << "\"#{obj.send(field).to_s}\""
+            row << obj.send(field)
           end    
           csv << row
         end
