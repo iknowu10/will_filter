@@ -718,7 +718,7 @@ module WillFilter
           end
         end
 
-        WillFilter::Filter.find(:all, :conditions => conditions)
+        WillFilter::Filter.where(conditions)
       end
     end
 
@@ -924,23 +924,23 @@ module WillFilter
 
     # sums up the column for the given conditions
     def sum(column_name)
-      model_class.sum(column_name, :conditions => sql_conditions)
+      model_class.where(sql_conditions).sum(column_name)
     end
 
     def max(column_name)
-      model_class.maximum(column_name, :conditions => sql_conditions)
+      model_class.where(sql_conditions).maximum(column_name)
     end
 
     def min(column_name)
-      model_class.minimum(column_name, :conditions => sql_conditions)
+      model_class.where(sql_conditions).minimum(column_name)
     end
 
     def avg(column_name)
-      model_class.average(column_name, :conditions => sql_conditions)
+      model_class.where(sql_conditions).average(column_name)
     end
 
     def count(column_name)
-      model_class.count(column_name, :conditions => sql_conditions)
+      model_class.where(sql_conditions).count(column_name)
     end
 
   end
