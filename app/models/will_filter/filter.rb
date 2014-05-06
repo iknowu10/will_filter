@@ -893,7 +893,7 @@ module WillFilter
     def results
       @results ||= begin
         handle_empty_filter!
-        recs = model_class.scoped.scoped(report_scope).where(sql_conditions).order(order_clause)
+        recs = model_class.where(report_scope).where(sql_conditions).order(order_clause)
         inner_joins.each do |inner_join|
           recs = recs.joins(association_name(inner_join))
         end
