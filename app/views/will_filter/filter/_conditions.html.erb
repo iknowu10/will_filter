@@ -12,7 +12,7 @@
   <div class="filter_match_type">
     <div class="end">
       <small>
-        <%=link_to_function(I18n.t("operational_reports.labels.toggle_conditions"), "wfFilter.toggleDebugger()") %>
+        <%=link_to(I18n.t("operational_reports.labels.toggle_conditions"), '#', onclick: "wfFilter.toggleDebugger()") %>
       </small>
     </div>
     <%= I18n.t("operational_reports.labels.match") %> <%= select_tag(:wf_match, options_for_select(wf_filter.match_options, wf_filter.match), {:onChange=>"wfFilter.markDirty()"}) %>
