@@ -20,7 +20,7 @@
           <td>
               <input type="checkbox" id="wf_fld_chk_<%=index%>" onClick="wfExporter.selectField(this);" style="width:20px;"><input type="hidden" id="wf_fld_name_<%=index%>" value="<%=col%>">
           </td>
-          <td><%= col %></td>
+          <td><%= @wf_filter.condition_title_for(col) %></td>
       </tr>
       <% end %>
     </tbody>
