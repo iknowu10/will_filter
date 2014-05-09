@@ -20,7 +20,7 @@
   	<table>
   		<tr>
 		  	<% @wf_filter.fields.each do |field| %>  	
-		    	<th><%=field %></th>
+		    	<th><%=@wf_filter.condition_title_for(field) %></th>
 		    <% end %>	
 		</tr>   
 		<% @wf_filter.results.each do |obj| %>

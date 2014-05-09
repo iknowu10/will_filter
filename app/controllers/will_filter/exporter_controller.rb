@@ -97,7 +97,7 @@ module WillFilter
       csv_string = CSV.generate(:col_sep => "\t", :row_sep => "\r\n", :headers => true, :force_quotes => true) do |csv|
         csv << execution_time
         csv << report_name(wf_filter)
-        csv << wf_filter.fields
+        csv << wf_filter.fields.map{|f| wf_filter.condition_title_for(f)}
         wf_filter.results.each do |obj|
           row = []
           wf_filter.fields.each do |field|
