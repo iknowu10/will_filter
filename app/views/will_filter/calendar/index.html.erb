@@ -1,12 +1,12 @@
 <div style="font-size:12px;font-weight:bold;">
   <div style="float:right; padding-right:2px;">
 	  <% if @calendar.mode == 'month' %>
-	     <%=link_to_function("&laquo; expand".html_safe, "wfCalendar.changeMode('quarter', #{@calendar.show_time?})", :style => "font-size:10px; padding-bottom: 3px")%> &nbsp;
+	     <%=link_to("&laquo; expand".html_safe, "#", :onclick=> "wfCalendar.changeMode('quarter', #{@calendar.show_time?})", :style => "font-size:10px; padding-bottom: 3px")%> &nbsp;
 		<% elsif @calendar.mode == 'quarter' %>
-       <%=link_to_function("&laquo; expand".html_safe, "wfCalendar.changeMode('annual', #{@calendar.show_time?})", :style => "font-size:10px; padding-bottom: 3px")%> &nbsp;
+       <%=link_to("&laquo; expand".html_safe, "#", :onclick=> "wfCalendar.changeMode('annual', #{@calendar.show_time?})", :style => "font-size:10px; padding-bottom: 3px")%> &nbsp;
 		<% end %>
 		 
-    <%=link_to_function(image_tag("will_filter/close.gif", :title=>"Close"), "wfCalendar.hide()")%>
+    <%=link_to(image_tag("will_filter/close.gif", :title=>"Close"), "#", :onclick=>  "wfCalendar.hide()")%>
   </div>
 	
   <%= I18n.t("operational_reports.labels.calendar") %>
@@ -20,14 +20,14 @@
 
 	  <div style="padding:5px;text-align:center; margin-bottom:5px; border-bottom: 1px solid #ccc;"> 
 			  &nbsp; 				
-		  	<%=link_to_function("&laquo;".html_safe, "wfCalendar.goToStartDate('#{@calendar.previous_start_date}')", :style=>"font-size:16px;")%>	
+		  	<%=link_to("&laquo;".html_safe, "#", :onclick=> "wfCalendar.goToStartDate('#{@calendar.previous_start_date}')", :style=>"font-size:16px;")%>
 			  &nbsp;&nbsp;&nbsp; 			
 				<% if @calendar.mode != 'annual' %>	
   		 		 <%= select_tag("month", options_for_select(WillFilter::Calendar.month_options, @calendar.month), {:id => "wf_calendar_month", :onChange=>"wfCalendar.goToStartDate('')", :style => "width:auto;"}) %>
 				<% end %>
 		 		<%= select_tag("year", options_for_select(WillFilter::Calendar.year_options, @calendar.year), {:id => "wf_calendar_year",:onChange=>"wfCalendar.goToStartDate('')", :style => "width:auto;"}) %>
 			  &nbsp;&nbsp;&nbsp; 				
-		  	<%=link_to_function("&raquo".html_safe, "wfCalendar.goToStartDate('#{@calendar.next_start_date}')", :style=>"font-size:16px;")%>	
+		  	<%=link_to("&raquo".html_safe, "#", :onclick=> "wfCalendar.goToStartDate('#{@calendar.next_start_date}')", :style=>"font-size:16px;")%>
 			  &nbsp; 	
 		</div>					
 		
@@ -43,8 +43,8 @@
 				      :
 				      <%= select_tag("wf_calendar_second", options_for_select(WillFilter::Calendar.second_options, @calendar.second), :style => "width:auto;") %>
 			    </div>
-		      <%=link_to_function("<span>#{I18n.t("operational_reports.labels.set_date_and_time")}</span>".html_safe, "wfCalendar.setDateTime()", :class => "wf_grey_button wf_pcb") %>
-		      <%=link_to_function("<span>#{I18n.t("operational_reports.labels.cancel")}</span>".html_safe, "wfCalendar.hide()", :class => "wf_grey_button wf_pcb") %>
+		      <%=link_to("<span>#{I18n.t("operational_reports.labels.set_date_and_time")}</span>".html_safe, "#", :onclick=> "wfCalendar.setDateTime()", :class => "wf_grey_button wf_pcb") %>
+		      <%=link_to("<span>#{I18n.t("operational_reports.labels.cancel")}</span>".html_safe, "#", :onclick=> "wfCalendar.hide()", :class => "wf_grey_button wf_pcb") %>
 		  </div>
 		<% end %>
 	
