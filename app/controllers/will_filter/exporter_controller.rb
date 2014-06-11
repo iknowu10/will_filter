@@ -104,7 +104,7 @@ module WillFilter
         end
       end
 
-      send_data csv_string.convert('utf-8'), :type => 'text/csv; charset=utf-8; header=present', :charset => 'utf-8',
+      send_data csv_string.encode('utf-8'), :type => 'text/csv; charset=utf-8; header=present', :charset => 'utf-8',
                             :disposition => "attachment; filename=results.csv"      
     end
 
