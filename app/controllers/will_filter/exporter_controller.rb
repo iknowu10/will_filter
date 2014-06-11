@@ -21,13 +21,10 @@
 # WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #++
 
-require 'iconv'
 require 'csv'
 
 module WillFilter
   class ExporterController < ApplicationController
-
-    WINDOWS_UTF16LE_BOM = "\377\376"
 
     def index
       @wf_filter = WillFilter::Filter.deserialize_from_params(params)
@@ -107,7 +104,7 @@ module WillFilter
         end
       end
 
-      send_data WINDOWS_UTF16LE_BOM + Iconv.conv("utf-16le", "utf-8", csv_string), :type => 'text/csv; charset=utf-8; header=present', :charset => 'utf-8',
+      send_data csv_string.convert('utf-8'), :type => 'text/csv; charset=utf-8; header=present', :charset => 'utf-8',
                             :disposition => "attachment; filename=results.csv"      
     end
 
