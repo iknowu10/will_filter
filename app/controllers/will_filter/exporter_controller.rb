@@ -91,7 +91,7 @@ module WillFilter
     end  
     
     def send_csv_data(wf_filter)
-      csv_string = CSV.generate(:col_sep => "\t", :row_sep => "\r\n", :headers => true, :force_quotes => true) do |csv|
+      csv_string = CSV.generate(:col_sep => ",", :row_sep => "\r\n", :headers => true, :force_quotes => true) do |csv|
         csv << execution_time
         csv << report_name(wf_filter)
         csv << wf_filter.fields.map{|f| wf_filter.condition_title_for(f)}
@@ -104,8 +104,8 @@ module WillFilter
         end
       end
 
-      send_data csv_string.encode('utf-8'), :type => 'text/csv; charset=utf-8; header=present', :charset => 'utf-8',
-                            :disposition => "attachment; filename=results.csv"      
+      send_data csv_string.encode('utf-16'), :type => 'text/csv; charset=utf-8; header=present', :charset => 'utf-8',
+                            :disposition => '"attachment; filename=results.csv"    '
     end
 
     def report_name(wf_filter)
