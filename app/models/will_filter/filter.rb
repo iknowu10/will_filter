@@ -551,6 +551,8 @@ module WillFilter
 
       self.id = params[:wf_id].to_i unless params[:wf_id].blank?
       self.name = params[:wf_name] unless params[:wf_name].blank?
+      self.session_store = params[:session_store] if params[:session_store]
+      self.current_organisation_id = params[:current_organisation_id] if params[:current_organisation_id]
 
       @fields = []
       unless params[:wf_export_fields].blank?

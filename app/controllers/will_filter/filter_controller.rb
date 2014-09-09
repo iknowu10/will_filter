@@ -25,51 +25,45 @@ module WillFilter
   class FilterController < ApplicationController
 
     def index
-      @filters = WillFilter::Filter.new(WillFilter::Filter).deserialize_from_params(params).results
+      @filters = WillFilter::Filter.new(WillFilter::Filter).deserialize_from_params(customized_filter_params).results
     end
 
     def update_condition
-      wf_filter = WillFilter::Filter.deserialize_from_params(params)
+      wf_filter = WillFilter::Filter.deserialize_from_params(customized_filter_params)
       condition = wf_filter.condition_at(params[:at_index].to_i)
       condition.container.reset_values
-      config_will_filter wf_filter
-
       render(:partial => '/will_filter/filter/conditions', :layout=>false, :locals => {:wf_filter => wf_filter})
     end
 
     def remove_condition
-      wf_filter = WillFilter::Filter.deserialize_from_params(params)
+      wf_filter = WillFilter::Filter.deserialize_from_params(customized_filter_params)
       wf_filter.remove_condition_at(params[:at_index].to_i)
-      config_will_filter wf_filter
 
       render(:partial => '/will_filter/filter/conditions', :layout=>false, :locals => {:wf_filter => wf_filter})
     end
 
     def add_condition
-      wf_filter = WillFilter::Filter.deserialize_from_params(params)
+      wf_filter = WillFilter::Filter.deserialize_from_params(customized_filter_params)
       index = params[:after_index].to_i
       if index == -1
         wf_filter.add_default_condition_at(wf_filter.size)
       else
         wf_filter.add_default_condition_at(params[:after_index].to_i + 1)
       end
-      config_will_filter wf_filter
 
       render(:partial => '/will_filter/filter/conditions', :layout=>false, :locals => {:wf_filter => wf_filter})
     end
 
     def remove_all_conditions
-      wf_filter = WillFilter::Filter.deserialize_from_params(params)
+      wf_filter = WillFilter::Filter.deserialize_from_params(customized_filter_params)
       wf_filter.remove_all
-      config_will_filter wf_filter
 
       render(:partial => '/will_filter/filter/conditions', :layout=>false, :locals => {:wf_filter => wf_filter})
     end
 
     def load_filter
-      wf_filter = WillFilter::Filter.deserialize_from_params(params)
+      wf_filter = WillFilter::Filter.deserialize_from_params(customized_filter_params)
       wf_filter = wf_filter.load_filter!(params[:wf_key])
-      config_will_filter wf_filter
 
       render(:partial => '/will_filter/filter/conditions', :layout=>false, :locals => {:wf_filter => wf_filter})
     end
@@ -79,7 +73,7 @@ module WillFilter
 
       params.delete(:wf_id)
 
-      wf_filter = WillFilter::Filter.deserialize_from_params(params)
+      wf_filter = WillFilter::Filter.deserialize_from_params(customized_filter_params)
       wf_filter.validate!
 
       unless wf_filter.errors?
@@ -87,7 +81,6 @@ module WillFilter
       end
 
       wf_filter.key= wf_filter.id.to_s
-      config_will_filter wf_filter
 
       render(:partial => '/will_filter/filter/conditions', :layout=>false, :locals => {:wf_filter => wf_filter})
     end
@@ -96,7 +89,7 @@ module WillFilter
       raise WillFilter::FilterException.new("Update functions are disabled") unless  WillFilter::Config.saving_enabled?
 
       wf_filter = WillFilter::Filter.find_by_id(params.delete(:wf_id))
-      wf_filter.deserialize_from_params(params)
+      wf_filter.deserialize_from_params(customized_filter_params)
       wf_filter.validate!
 
       unless wf_filter.errors?
@@ -104,7 +97,6 @@ module WillFilter
       end
 
       wf_filter.key= wf_filter.id.to_s
-      config_will_filter wf_filter
 
       render(:partial => '/will_filter/filter/conditions', :layout=>false, :locals => {:wf_filter => wf_filter})
     end
@@ -115,19 +107,17 @@ module WillFilter
       wf_filter = WillFilter::Filter.find_by_id(params[:wf_id])
       wf_filter.destroy if wf_filter
 
-      wf_filter = WillFilter::Filter.deserialize_from_params(params)
+      wf_filter = WillFilter::Filter.deserialize_from_params(customized_filter_params)
       wf_filter.id=nil
       wf_filter.key=nil
       wf_filter.remove_all
 
-      config_will_filter wf_filter
       render(:partial => '/will_filter/filter/conditions', :layout=>false, :locals => {:wf_filter => wf_filter})
     end
 
     private
-    def config_will_filter wf_filter
-      wf_filter.session_store = JSON.parse(session[:wf_filter_session_store], {:symbolize_names => true})
-      wf_filter.current_organisation_id = session[:current_organisation_id]
+    def customized_filter_params
+      params.merge({:session_store => JSON.parse(session[:wf_filter_session_store], {:symbolize_names => true}), :organisation_id => session[:current_organisation_id]})
     end
   end
 end
