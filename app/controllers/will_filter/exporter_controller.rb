@@ -55,55 +55,45 @@ module WillFilter
       end
       
       if @wf_filter.format == :xml
-        return send_xml_data(@wf_filter)
+        return send_xml_data
       end  
   
       if @wf_filter.format == :json
-        return send_json_data(@wf_filter)
+        return send_json_data
       end  
       
       if @wf_filter.format == :csv
-        return send_csv_data(@wf_filter)
+        return send_csv_data
       end  
   
       render :layout => false
     end  
   
-  private
-    
-    def results_from(wf_filter)
-      results = []
-      
-      wf_filter.results.each do |obj|
-        hash = {}
-        wf_filter.fields.each do |field|
-          hash[field] = obj.send(field).to_s 
-        end  
-        results << hash
+    private
+
+    def filter_results
+      @wf_filter.results.map do |obj|
+        @wf_filter.fields.each.inject({}) do |h,field|
+          h.merge({field => obj.send(field).to_s})
+        end
       end
-      
-      results
     end
   
-    def send_xml_data(wf_filter)
-      send_data(results_from(wf_filter).to_xml, :type => 'text/xml', :charset => 'utf-8')
+    def send_xml_data
+      send_data(filter_results.to_xml, :type => 'text/xml', :charset => 'utf-8')
     end  
   
-    def send_json_data(wf_filter)
-      send_data(results_from(wf_filter).to_json, :type => 'text', :charset => 'utf-8')
+    def send_json_data
+      send_data(filter_results.to_json, :type => 'text', :charset => 'utf-8')
     end  
     
-    def send_csv_data(wf_filter)
+    def send_csv_data
       csv_string = CSV.generate(:col_sep => "\t", :row_sep => "\r\n", :headers => true, :force_quotes => true) do |csv|
         csv << execution_time
-        csv << report_name(wf_filter)
-        csv << wf_filter.fields.map{|f| wf_filter.condition_title_for(f)}
-        wf_filter.results.each do |obj|
-          row = []
-          wf_filter.fields.each do |field|
-            row << obj.send(field)
-          end    
-          csv << row
+        csv << report_name
+        csv << @wf_filter.fields.map{|f| @wf_filter.condition_title_for(f)}
+        @wf_filter.results.each do |obj|
+          csv << @wf_filter.fields.map {|field| obj.send(field)}
         end
       end
 
@@ -111,16 +101,20 @@ module WillFilter
                             :disposition => "attachment; filename=results.csv"      
     end
 
-    def report_name(wf_filter)
-      [I18n.t('operational_reports.labels.report_name'), report_filter_name(wf_filter)]
+    def report_name
+      [I18n.t('operational_reports.labels.report_name'), report_filter_name]
     end
 
-    def report_filter_name(wf_filter)
-      wf_filter.name.present? ? wf_filter.name : report_default_filter_name(wf_filter)
+    def report_filter_name
+      @wf_filter.name.present? ? @wf_filter.name : report_default_filter_name || report_title
     end
 
-    def report_default_filter_name(wf_filter)
-      params[:wf_key] != '-1' ? I18n.t("operational_reports.default_filters.#{params[:wf_model].demodulize.downcase}.#{params[:wf_key]}") : I18n.t('operational_reports.labels.custom_report')
+    def report_default_filter_name
+      params[:wf_key] && params[:wf_key] != '-1' ? I18n.t("operational_reports.default_filters.#{params[:wf_model].demodulize.downcase}.#{params[:wf_key]}") : nil
+    end
+
+    def report_title
+      I18n.t("operational_reports.report_titles.#{params[:wf_model].demodulize.underscore}")
     end
 
     def execution_time
