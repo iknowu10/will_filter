@@ -23,6 +23,7 @@
 
 module WillFilter
   class FilterController < ApplicationController
+    helper_method :custom_filters
 
     def index
       @filters = WillFilter::Filter.new(WillFilter::Filter).deserialize_from_params(customized_filter_params).results
@@ -113,6 +114,10 @@ module WillFilter
       wf_filter.remove_all
 
       render(:partial => '/will_filter/filter/conditions', :layout=>false, :locals => {:wf_filter => wf_filter})
+    end
+
+    def custom_filters
+      nil
     end
 
     private
