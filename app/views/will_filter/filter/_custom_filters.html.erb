@@ -1,6 +1,6 @@
 <% if custom_filters %>
     <% custom_filters.each do |cf| %>
-        <div class="end" style="padding-left:3px;">  <%= select_tag(cf[:field_name], options_for_select(cf[:options], params[cf[:field_name]]),  {:include_blank => true, :style => "min-width: 150px; max-width: 260px;"}) %> </div>
+        <div class="end" style="padding-left:3px;">  <%= select_tag(cf[:field_name], options_for_select(cf[:selections], params[cf[:field_name]]), cf[:options]) %> </div>
         <div class="end" style="padding-left:10px;">  <%= cf[:label] %>: </div>
     <% end %>
 <% end %>
