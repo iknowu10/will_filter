@@ -30,6 +30,8 @@
     </div>
   <% end %>
 
+  <div class="end" style="padding-right:10px;"><%=  render :partial => "will_filter/filter/custom_filters" ,:locals => { :wf_filter => wf_filter } %></div>
+
   <div>
     <% unless wf_filter.saved_filters.empty? %>
        <%= select_tag(:wf_key, options_for_select(wf_filter.saved_filters, wf_filter.key), {:onChange=>"wfFilter.loadSavedFilter()"}) %>
