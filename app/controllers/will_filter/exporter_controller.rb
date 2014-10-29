@@ -38,7 +38,7 @@ module WillFilter
   
     def export
       params[:page] = 1
-      params[:wf_per_page] = 30000 # max export limit
+      params[:wf_per_page] = 20000 # max export limit
   
       @wf_filter = WillFilter::Filter.deserialize_from_params(params)
       @wf_filter.session_store = JSON.parse(session[:wf_filter_session_store], {:symbolize_names => true})
