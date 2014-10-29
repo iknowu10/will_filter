@@ -120,5 +120,9 @@ module WillFilter
     def execution_time
       [I18n.t('operational_reports.labels.report_time'), Time.now.strftime("%Y-%m-%d %l:%M:%S")]
     end
+
+    def action_time_limit
+      180
+    end
   end
 end
