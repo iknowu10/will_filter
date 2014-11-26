@@ -45,7 +45,11 @@ module WillFilter
       @wf_filter.current_organisation_id = session[:current_organisation_id]
       
       if @wf_filter.custom_format?
-        send_data(@wf_filter.process_custom_format, :type => 'text', :charset => 'utf-8')
+        send_data(@wf_filter.process_custom_format,
+                  :type => 'text',
+                  :charset => 'utf-8',
+                  :disposition => 'attachment',
+                  :filename => "#{file_system_safe(report_filter_name)}_#{Time.now.strftime("%Y-%m-%d %l:%M:%S")}.#{params[:wf_export_format]}")
         return
       end
       
@@ -123,6 +127,10 @@ module WillFilter
 
     def action_time_limit
       180
+    end
+
+    def file_system_safe(name)
+      name.downcase.gsub(/[\s\/\\:\*\?"<>|-]/, '_').force_encoding('UTF-8')
     end
   end
 end
